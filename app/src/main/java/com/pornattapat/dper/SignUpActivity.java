@@ -67,12 +67,28 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void onSignUpConfirm(View view) {
-        Toast.makeText(getApplicationContext(),"OK",Toast.LENGTH_SHORT).show();
         final String email = signUpEmail.getText().toString();
         final String password = signUpPassword.getText().toString();
         final String name = signUpName.getText().toString();
         final String repassword = signUpRePassword.getText().toString();
         final String surname = signUpSurName.getText().toString();
+
+        if(     email.isEmpty() ||
+                password.isEmpty() ||
+                name.isEmpty() ||
+                repassword.isEmpty() ||
+                surname.isEmpty() ) {
+            Toast.makeText(getApplicationContext(),"กรุณากรอกข้อมูลให้ครบทุกช่อง",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(password.length() < 6 || repassword.length() < 6) {
+            Toast.makeText(getApplicationContext(),"รหัสผ่านควรมี 6 ตัว ขึ้นไป",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if( !password.equals(repassword)) {
+            Toast.makeText(getApplicationContext(), "รหัสผ่าน ไม่ตรงกันกรุณาตรวจสอบอีกครั้ง", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
