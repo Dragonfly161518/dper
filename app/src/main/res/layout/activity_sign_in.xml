@@ -72,7 +72,7 @@
             android:ems="10"
             android:outlineProvider="bounds"
             android:elevation="5dp"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:hint="รหัสผ่าน"
             android:inputType="textPassword"
             android:paddingLeft="50dp"
@@ -95,7 +95,7 @@
             android:hint="อีเมล"
             android:inputType="textEmailAddress"
             android:paddingLeft="50dp"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
