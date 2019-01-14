@@ -1,33 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg05"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="8dp"
-        android:text="WELCOME"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnSignOut"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="onClickSignOut"
-        android:text="Sign Out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-</android.support.constraint.ConstraintLayout>
+        android:src="@drawable/stick01"
+        />
+
+
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:menu_icon="@drawable/ic_menu"
+        app:menu_showShadow="true"
+        android:layout_gravity="top|right"
+        android:layout_margin="8dp"
+        app:menu_colorNormal="@color/colorSettingNormal"
+        app:menu_colorPressed="@color/colorSettingPressed"
+        app:menu_colorRipple="@color/colorSettingRipple"
+        app:menu_openDirection="down"
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_quit"
+            app:fab_size="mini"
+            android:onClick="onClickSignOut"
+            app:fab_label="ออกจากระบบ" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings"
+            app:fab_size="mini"
+            app:fab_label="ตั้งค่า" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <com.pornattapat.dper.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sign01"
+        android:onClick="displayTest1"/>
+
+    <com.pornattapat.dper.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="displayTest1"
+        android:src="@drawable/sign02" />
+
+
+</FrameLayout>

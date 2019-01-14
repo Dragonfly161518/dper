@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,5 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSignOut(View view) {
         mAuth.signOut();
+    }
+
+    public void displayTest1(View view) {
+        Toast.makeText(getApplicationContext(),"test1",Toast.LENGTH_SHORT).show();
+    }
+
+    public void displayTest2(View view) {
+        Toast.makeText(getApplicationContext(),"test2",Toast.LENGTH_SHORT).show();
     }
 }
