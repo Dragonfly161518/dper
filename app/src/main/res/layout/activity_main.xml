@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg05"
+    android:background="@drawable/bg_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/stick01"
+        android:src="@drawable/pole_main"
         />
 
 
@@ -49,14 +49,14 @@
     <com.pornattapat.dper.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/sign01"
+        android:src="@drawable/sign_main_1"
         android:onClick="displayTest1"/>
 
     <com.pornattapat.dper.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="displayTest1"
-        android:src="@drawable/sign02" />
+        android:onClick="displayTest2"
+        android:src="@drawable/sign_main_2" />
 
 
 </FrameLayout>
