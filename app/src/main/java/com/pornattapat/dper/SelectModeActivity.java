@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity {
+public class SelectModeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_select_mode);
 
         db = FirebaseFirestore.getInstance();
 
@@ -82,12 +82,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
     }
 
-    public void selectModePage(View view) {
-        Intent intent = new Intent(getApplicationContext(),SelectModeActivity.class);
-        startActivity(intent);
+    public void displayTest1(View view) {
+        Toast.makeText(getApplicationContext(),"test1",Toast.LENGTH_SHORT).show();
     }
 
     public void displayTest2(View view) {
-        Toast.makeText(getApplicationContext(),"test2",Toast.LENGTH_SHORT).show();
+        finish();
     }
 }
