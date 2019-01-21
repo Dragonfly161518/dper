@@ -21,6 +21,7 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".SelectModeActivity"></activity>
+        <activity android:name=".WrittingLevelActivity"></activity>
     </application>
 
 </manifest>

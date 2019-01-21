@@ -82,11 +82,12 @@ public class SelectModeActivity extends AppCompatActivity {
         mAuth.signOut();
     }
 
-    public void displayTest1(View view) {
-        Toast.makeText(getApplicationContext(),"test1",Toast.LENGTH_SHORT).show();
+    public void writtingLevel(View view) {
+        Intent intent = new Intent(getApplicationContext(),WrittingLevelActivity.class);
+        startActivity(intent);
     }
 
-    public void displayTest2(View view) {
+    public void back(View view) {
         finish();
     }
 }
