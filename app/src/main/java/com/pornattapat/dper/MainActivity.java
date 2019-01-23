@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void displayTest2(View view) {
-        Toast.makeText(getApplicationContext(),"test2",Toast.LENGTH_SHORT).show();
+    public void libraryRoom(View view) {
+        Intent intent = new Intent(getApplicationContext(),LibraryActivity.class);
+        startActivity(intent);
     }
 }

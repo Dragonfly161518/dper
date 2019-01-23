@@ -47,7 +47,7 @@
     <com.pornattapat.dper.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-            android:onClick="displayTest2"
+            android:onClick="libraryRoom"
         android:src="@drawable/sign_main_2" />
 
     <com.github.clans.fab.FloatingActionMenu

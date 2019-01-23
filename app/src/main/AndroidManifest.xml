@@ -22,6 +22,8 @@
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".SelectModeActivity"></activity>
         <activity android:name=".WrittingLevelActivity"></activity>
+        <activity android:name=".DirectMessageActivity"></activity>
+        <activity android:name=".LibraryActivity"></activity>
     </application>
 
 </manifest>
