@@ -21,9 +21,7 @@
                 app:cardCornerRadius="5dp"
                 app:cardElevation="10dp"
                 android:layout_margin="16dp"
-                app:cardMaxElevation="15dp"
-                app:contentPaddingLeft="10dp"
-                app:contentPaddingRight="10dp">
+                app:cardMaxElevation="15dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -32,24 +30,11 @@
 
                     <ImageView
                         android:id="@+id/cardImage1"
-                        android:layout_width="match_parent"
-                        android:layout_height="170dp"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/cardTitle"
+                        android:background="@drawable/lib_extra"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/cardImage1"
-                        android:gravity="center_vertical"
-                        android:text="Card Title" />
+                        android:scaleType="centerCrop" />
 
-                    <ProgressBar
-                        android:id="@+id/cardProgressDialog"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -78,6 +63,7 @@
 
 
                         <ImageView
+                            android:background="@drawable/lib_text"
                             android:id="@+id/cardImage3"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
@@ -89,14 +75,14 @@
                             android:layout_height="match_parent"
                             android:layout_below="@+id/cardImage3"
                             android:gravity="center_vertical"
-                            android:text="Card Title" />
+                            android:text="การใช้ กระ และกะ" />
 
-                        <ProgressBar
-                            android:id="@+id/cardProgressDialog3"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true" />
+                        <!--<ProgressBar-->
+                            <!--android:id="@+id/cardProgressDialog3"-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:layout_centerVertical="true" />-->
 
                     </RelativeLayout>
 
@@ -119,6 +105,7 @@
 
 
                         <ImageView
+                            android:background="@drawable/lib_text1"
                             android:id="@+id/cardImage2"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
@@ -130,14 +117,14 @@
                             android:layout_height="match_parent"
                             android:layout_below="@+id/cardImage2"
                             android:gravity="center_vertical"
-                            android:text="Card Title" />
+                            android:text="กลอนช่วยจำ 'กระ'" />
 
-                        <ProgressBar
-                            android:id="@+id/cardProgressDialog2"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true" />
+                        <!--<ProgressBar-->
+                            <!--android:id="@+id/cardProgressDialog2"-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:layout_centerVertical="true" />-->
 
                     </RelativeLayout>
 
@@ -169,14 +156,15 @@
 
                         <ImageView
                             android:id="@+id/blog_user_image"
-                            android:src="@drawable/ic_message"
-                            android:clickable="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:onClick="directActivity"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:onClick="directActivity"
+                            android:src="@drawable/ic_message"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -185,9 +173,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
-                            android:text="Username"
+                            android:text="ไทยทำไทยใช้"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toEndOf="@+id/blog_user_image"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -195,14 +183,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Blog Post Date"
-                            app:layout_constraintStart_toEndOf="@+id/blog_user_image"
+                            android:text="14/01/62"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/blog_user_name" />
 
                         <ImageView
                             android:id="@+id/blog_image"
                             android:layout_width="0dp"
-                            android:layout_height="200dp"
+                            android:layout_height="0dp"
                             android:layout_marginTop="16dp"
                             android:scaleType="centerCrop"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -218,7 +206,7 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:text="Lorem ipsum dolor sit amet, soluta regione urbanitas vis in, qui elit populo ut. "
+                            android:text="สอบถามเรื่องการใช้คำทับศัพท์ค่ะ มีใครมีข้อแนะำนบ้างคะ"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -288,6 +276,19 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
+                            android:id="@+id/blog_user_image1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:onClick="directActivity"
+                            android:src="@drawable/ic_message"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
                             android:id="@+id/blog_user_image2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -302,9 +303,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
-                            android:text="Username"
+                            android:text="นายจันทร์"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toEndOf="@+id/blog_user_image2"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -312,14 +313,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Blog Post Date"
-                            app:layout_constraintStart_toEndOf="@+id/blog_user_image2"
+                            android:text="10/01/62"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/blog_user_name2" />
 
                         <ImageView
                             android:id="@+id/blog_image2"
                             android:layout_width="0dp"
-                            android:layout_height="200dp"
+                            android:layout_height="20dp"
                             android:layout_marginTop="16dp"
                             android:scaleType="centerCrop"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -387,5 +388,17 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_create"
+        app:fab_colorNormal="@color/colorPrimary"
+        app:fab_colorPressed="@color/colorPrimaryDark"
+        app:fab_colorRipple="@color/colorPrimaryDark"/>
 
 </FrameLayout>

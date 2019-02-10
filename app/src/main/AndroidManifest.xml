@@ -24,6 +24,8 @@
         <activity android:name=".WrittingLevelActivity"></activity>
         <activity android:name=".DirectMessageActivity"></activity>
         <activity android:name=".LibraryActivity"></activity>
+        <activity android:name=".Exam.StartExam"></activity>
+        <activity android:name=".Exam.PlayExamActivity"></activity>
     </application>
 
 </manifest>

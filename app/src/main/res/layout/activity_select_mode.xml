@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/carrot_main" />
+        android:background="@drawable/carrot_main" />
 
     <ImageView
         android:id="@+id/carrot"
@@ -82,5 +82,12 @@
             app:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/rabbit_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
