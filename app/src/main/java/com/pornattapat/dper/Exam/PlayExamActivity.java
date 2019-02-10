@@ -61,6 +61,11 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
         db = FirebaseFirestore.getInstance();
 
+
+        leftAnswer = findViewById(R.id.leftAnswer);
+        rightAnswer = findViewById(R.id.rightAnswer);
+        counter = findViewById(R.id.counter);
+        quizPicture = findViewById(R.id.quizPicture);
         progressBar = findViewById(R.id.progress);
         Sprite effect = new FoldingCube();
         progressBar.setIndeterminateDrawable(effect);
@@ -77,11 +82,12 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setQuiz(int index) {
+
         progressBar.setVisibility(View.VISIBLE);
-        leftAnswer = findViewById(R.id.leftAnswer);
-        rightAnswer = findViewById(R.id.rightAnswer);
-        counter = findViewById(R.id.counter);
-        quizPicture = findViewById(R.id.quizPicture);
+        leftAnswer.setVisibility(View.INVISIBLE);
+        rightAnswer.setVisibility(View.INVISIBLE);
+        counter.setVisibility(View.INVISIBLE);
+        quizPicture.setVisibility(View.INVISIBLE);
 
         leftAnswer.setOnClickListener(this);
         rightAnswer.setOnClickListener(this);
@@ -108,6 +114,10 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                                    @Override
                                                    public void onSuccess() {
                                                        progressBar.setVisibility(View.INVISIBLE);
+                                                       leftAnswer.setVisibility(View.VISIBLE);
+                                                       rightAnswer.setVisibility(View.VISIBLE);
+                                                       counter.setVisibility(View.VISIBLE);
+                                                       quizPicture.setVisibility(View.VISIBLE);
                                                        leftAnswer.setText(document.getString("A"));
                                                        rightAnswer.setText(document.getString("B"));
                                                        answer = document.getString("correctAnswer");
@@ -143,15 +153,17 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         mCountDown = new CountDownTimer(10000,1000) {
             @Override
             public void onTick(long l) {
-                counter.setText((int)l/1000 + "");
+                counter.setText(String.valueOf(l/1000));
             }
 
             @Override
             public void onFinish() {
                 mCountDown.cancel();
-                counter.setText("0");
+                if(index + 1 >= totalQuiz) {
+                    endGame();
+                    return;
+                }
                 setQuiz(++index);
-                Toast.makeText(getApplicationContext(),"finish",Toast.LENGTH_SHORT).show();
             }
         };
         Toast.makeText(getApplicationContext(),index+"",Toast.LENGTH_SHORT).show();
@@ -166,18 +178,30 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         mCountDown.cancel();
         if(index < totalQuiz) {
-
-//            Button clickedBtn = (Button) view;
-//            if(clickedBtn.getText().equals(answer)) {
-//                score += 10;
-//                correctAnswer++;
-//                setQuiz(++index);
-//            } else {
-//
-//            }
-
+            String checkAnswer = "";
+            switch(view.getId()) {
+                case R.id.leftAnswer:
+                    checkAnswer = leftAnswer.getText().toString();
+                    break;
+                case R.id.rightAnswer:
+                    checkAnswer = rightAnswer.getText().toString();
+                    break;
+            }
+            if(checkAnswer.equals(answer)) {
+                score += 10;
+                correctAnswer++;
+            }
+            if(index + 1 >= totalQuiz) {
+                endGame();
+                return;
+            }
+            setQuiz(++index);
         } else {
-
+            endGame();
         }
+    }
+    public void endGame() {
+        Toast.makeText(getApplicationContext(),
+                "Score " + score + " | correct " + correctAnswer,Toast.LENGTH_SHORT).show();
     }
 }
