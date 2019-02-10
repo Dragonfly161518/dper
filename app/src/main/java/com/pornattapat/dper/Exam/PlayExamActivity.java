@@ -9,9 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +36,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
     CountDownTimer mCountDown;
 
+    ProgressBar progressBar;
     TextView leftAnswer;
     TextView rightAnswer;
     ImageView quizPicture;
@@ -56,6 +61,9 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
         db = FirebaseFirestore.getInstance();
 
+        progressBar = findViewById(R.id.progress);
+        Sprite effect = new FoldingCube();
+        progressBar.setIndeterminateDrawable(effect);
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -69,6 +77,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setQuiz(int index) {
+        progressBar.setVisibility(View.VISIBLE);
         leftAnswer = findViewById(R.id.leftAnswer);
         rightAnswer = findViewById(R.id.rightAnswer);
         counter = findViewById(R.id.counter);
@@ -98,6 +107,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
                                                    @Override
                                                    public void onSuccess() {
+                                                       progressBar.setVisibility(View.INVISIBLE);
                                                        leftAnswer.setText(document.getString("A"));
                                                        rightAnswer.setText(document.getString("B"));
                                                        answer = document.getString("correctAnswer");
