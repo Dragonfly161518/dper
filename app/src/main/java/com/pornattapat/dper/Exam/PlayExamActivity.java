@@ -88,20 +88,29 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
+                                        final DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
-                                           leftAnswer.setText(document.getString("A"));
-                                           rightAnswer.setText(document.getString("B"));
-                                           answer = document.getString("correctAnswer");
-                                           Exam.TIMEOUT = document.getLong("time").intValue() * 1000;
 
                                            if(document.getBoolean("isVoiceExam")) {
 
                                            } else {
-                                               Picasso.get().load(document.getString("picture")).into(quizPicture);
+                                               Picasso.get().load(document.getString("picture")).into(quizPicture, new com.squareup.picasso.Callback() {
+
+                                                   @Override
+                                                   public void onSuccess() {
+                                                       leftAnswer.setText(document.getString("A"));
+                                                       rightAnswer.setText(document.getString("B"));
+                                                       answer = document.getString("correctAnswer");
+                                                       Exam.TIMEOUT = document.getLong("time").intValue() * 1000;
+                                                       mCountDown.start();
+                                                   }
+
+                                                   @Override
+                                                   public void onError(Exception e) {
+
+                                                   }
+                                               });
                                            }
-                                            Toast.makeText(getApplicationContext(), "TEST TO", Toast.LENGTH_SHORT).show();
-                                           mCountDown.start();
                                         } else {
                                             Toast.makeText(getApplicationContext(), "พบปัญหาในการเข้าถึงข้อมูล กรุณาติดต่อทีมพัฒนา " + indexQuiz + " " + Exam.category + " " + Exam.totalQuiz, Toast.LENGTH_SHORT).show();
                                         }
