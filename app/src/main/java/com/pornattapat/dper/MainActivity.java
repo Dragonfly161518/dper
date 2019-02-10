@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void libraryRoom(View view) {
-        Intent intent = new Intent(getApplicationContext(),LibraryActivity.class);
+        Intent intent = new Intent(getApplicationContext(),ClubActivity.class);
         startActivity(intent);
     }
 }
