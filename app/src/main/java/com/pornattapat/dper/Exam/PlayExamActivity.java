@@ -61,7 +61,6 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
         db = FirebaseFirestore.getInstance();
 
-
         leftAnswer = findViewById(R.id.leftAnswer);
         rightAnswer = findViewById(R.id.rightAnswer);
         counter = findViewById(R.id.counter);
@@ -122,7 +121,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                                        rightAnswer.setText(document.getString("B"));
                                                        answer = document.getString("correctAnswer");
                                                        Exam.TIMEOUT = document.getLong("time").intValue() * 1000;
-                                                       mCountDown.start();
+                                                       start();
                                                    }
 
                                                    @Override
@@ -149,8 +148,11 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         super.onResume();
 
         totalQuiz = Exam.totalQuiz;
+        setQuiz(index);
+    }
 
-        mCountDown = new CountDownTimer(10000,1000) {
+    public void start() {
+        mCountDown = new CountDownTimer(Exam.TIMEOUT,1000) {
             @Override
             public void onTick(long l) {
                 counter.setText(String.valueOf(l/1000));
@@ -166,12 +168,19 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                 setQuiz(++index);
             }
         };
-        Toast.makeText(getApplicationContext(),index+"",Toast.LENGTH_SHORT).show();
-        setQuiz(index);
+        mCountDown.start();
     }
 
     public void startExam() {
         startActivity(new Intent(getApplicationContext(),PlayExamActivity.class));
+    }
+
+    public void solve() {
+        if(leftAnswer.getText().equals(answer)) {
+
+        } else {
+
+        }
     }
 
     @Override

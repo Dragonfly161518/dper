@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:chatview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     style="@style/Widget.AppCompat.ButtonBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,12 +11,13 @@
 
     <co.intentservice.chatui.ChatView
         android:id="@+id/chat_view"
+        android:background="@drawable/bg_board"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        chatview:backgroundColor="@color/off_white"
-        chatview:bubbleElevation="elevated"
+        chatview:backgroundColor="#FFFFFF"
         chatview:bubbleBackgroundRcv="@color/blue"
         chatview:bubbleBackgroundSend="@color/white"
-        chatview:inputHint="พิมพ์ข้อความที่นี่..."/>
+        chatview:bubbleElevation="elevated"
+        chatview:inputHint="พิมพ์ข้อความที่นี่..." />
 
 </LinearLayout>

@@ -55,4 +55,12 @@ public class ClubActivity extends AppCompatActivity {
         };
     }
 
+    public void goLearningBoard(View v) {
+        startActivity(new Intent(getApplicationContext(),LibraryActivity.class));
+    }
+
+    public void goActivityBoard(View v) {
+
+    }
+
 }

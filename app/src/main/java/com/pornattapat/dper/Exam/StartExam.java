@@ -28,6 +28,8 @@ public class StartExam extends AppCompatActivity {
 
     TextView displayText;
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -77,5 +79,10 @@ public class StartExam extends AppCompatActivity {
 
     public void startExam(View view) {
         startActivity(new Intent(getApplicationContext(),PlayExamActivity.class));
+    }
+
+    public void exitExam(View view) {
+        finish();
+        Exam.category = "";
     }
 }

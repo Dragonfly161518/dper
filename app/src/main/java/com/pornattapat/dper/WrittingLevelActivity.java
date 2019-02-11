@@ -78,7 +78,6 @@ public class WrittingLevelActivity extends AppCompatActivity {
     public void exam(View view) {
         Exam.category = "Exam";
         startActivity(new Intent(getApplicationContext(),StartExam.class));
-        finish();
     }
 
     public void back(View view) {

@@ -16,6 +16,7 @@
 
 
             <ImageView
+                android:id="@+id/bg_scroll"
                 android:layout_width="wrap_content"
                 android:layout_height="2707dp"
                 android:background="@drawable/bglevel_main"
@@ -24,6 +25,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="104dp"
+                android:onClick="exam"
+                android:background="@drawable/level_1"
+                app:layout_constraintStart_toStartOf="@id/bg_scroll"
+                app:layout_constraintTop_toTopOf="@id/bg_scroll" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
@@ -32,7 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/top_bg"
-        android:onClick="exam"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
