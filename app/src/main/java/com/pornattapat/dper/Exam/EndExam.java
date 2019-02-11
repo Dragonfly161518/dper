@@ -26,7 +26,9 @@ public class EndExam extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseUser user;
 
-    TextView displayText;
+    Bundle b;
+
+    TextView carrotRecieve,score,sum;
 
     @Override
     protected void onStart() {
@@ -37,9 +39,21 @@ public class EndExam extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_end_exam);
+
+
+        b = getIntent().getExtras();
+        carrotRecieve = findViewById(R.id.carrot_recieve);
+        sum = findViewById(R.id.sum);
+        score = findViewById(R.id.score);
+
+        if(b != null) {
+            carrotRecieve.setText("+ "+ b.getInt("score")+"");
+            sum.setText(b.getInt("correct") + "/" + b.getInt("total"));
+            score.setText(b.getInt("score")+"");
+        }
 
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_start_exam);
 
         db = FirebaseFirestore.getInstance();
 
@@ -48,7 +62,6 @@ public class EndExam extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    setExamData();
                 } else {
                     startActivity(new Intent(getApplicationContext(),SignInActivity.class));
                 }
@@ -56,31 +69,12 @@ public class EndExam extends AppCompatActivity {
         };
     }
 
-    private void setExamData() {
-        displayText = findViewById(R.id.displayExamText);
-        db.collection("Exam").document("data")
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String textExam = document.getString("text");
-                        displayText.setText(textExam);
-                    } else {
-                        displayText.setText( "พบปัญหาในการเข้าถึงข้อมูล กรุณาติดต่อทีมพัฒนา");
-                    }
-                }
-            }
-        });
-    }
-
-    public void startExam(View view) {
-        startActivity(new Intent(getApplicationContext(),PlayExamActivity.class));
-    }
-
-    public void exitExam(View view) {
+    public void back(View view) {
         finish();
-        Exam.category = "";
+    }
+
+    public void nextExam(View view) {
+        finish();
+
     }
 }

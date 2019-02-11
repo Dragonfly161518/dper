@@ -209,8 +209,13 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
             endGame();
         }
     }
+
     public void endGame() {
-        Toast.makeText(getApplicationContext(),
-                "Score " + score + " | correct " + correctAnswer,Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), EndExam.class);
+        intent.putExtra("score",score);
+        intent.putExtra("total",totalQuiz);
+        intent.putExtra("correct",correctAnswer);
+        startActivity(intent);
+        finish();
     }
 }

@@ -11,38 +11,84 @@
         android:id="@+id/displayExamText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="8dp"
-        android:text="คะแนน"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="104dp"
+        android:text="คะแนน "
+        android:textColor="@color/white"
+        android:textSize="50sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:text="50"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintStart_toEndOf="@+id/displayExamText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:text="5/10"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayExamText" />
+
+    <TextView
+        android:id="@+id/carrot_recieve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="+ 10"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sum" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/carrot_main"
+        app:layout_constraintStart_toEndOf="@+id/carrot_recieve"
+        app:layout_constraintTop_toBottomOf="@+id/sum" />
+
     <Button
+        android:id="@+id/quit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/thsarabun"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="52dp"
-        android:onClick="exitExam"
-        android:text="กลับ"
+        android:onClick="nextExam"
+        android:text="ออก"
+        android:textSize="20dp"
+        android:textFontWeight="20dp"
         android:background="#cc1e1e"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/nextLevel"
         app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/nextLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="72dp"
+        android:fontFamily="@font/thsarabun"
         android:layout_marginBottom="52dp"
         android:background="#f2da5f"
-        android:onClick="startExam"
-        android:text="เริ่มเกม"
+        android:onClick="back"
+        android:text="ด่านต่อไป"
+        android:textSize="20dp"
+        android:textFontWeight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
