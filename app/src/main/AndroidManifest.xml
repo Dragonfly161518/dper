@@ -31,6 +31,8 @@
         <activity android:name=".Exam.StartExam"></activity>
         <activity android:name=".Exam.PlayExamActivity"></activity>
         <activity android:name=".Exam.EndExam"></activity>
+        <activity android:name=".BoardContentActivity"></activity>
+        <activity android:name=".Exam.PlayExtraActivity"></activity>
         <activity
             android:screenOrientation="landscape"
             android:name=".ClubActivity"></activity>

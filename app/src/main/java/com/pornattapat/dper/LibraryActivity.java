@@ -10,18 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
-public class LibraryActivity extends AppCompatActivity {
+public class LibraryActivity extends AppCompatActivity  {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -31,7 +32,7 @@ public class LibraryActivity extends AppCompatActivity {
     RecyclerView recyclerViewPost;
     RecyclerView recyclerViewBoard;
     FirestoreRecyclerAdapter<Post, PostViewHolder> adapterPost;
-    FirestoreRecyclerAdapter<Board, BoardViewHolder> adapterBoard;
+    BoardAdapter adapterBoard;
 
 
 
@@ -58,6 +59,7 @@ public class LibraryActivity extends AppCompatActivity {
                 }
             }
         };
+
     }
 
     public void recyclerPost() {
@@ -92,40 +94,25 @@ public class LibraryActivity extends AppCompatActivity {
                 .collection("boards");
         FirestoreRecyclerOptions<Board> options = new FirestoreRecyclerOptions.Builder<Board>()
                 .setQuery(query, Board.class).build();
-        adapterBoard = new FirestoreRecyclerAdapter<Board, BoardViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull final BoardViewHolder holder, int position, @NonNull final Board model) {
-                Picasso.get().load(model.getPictureHead()).into(holder.pictureBoard, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.textBoard.setText(model.getHead());
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                        holder.textBoard.setVisibility(View.VISIBLE);
-                        holder.pictureBoard.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-                });
-            }
-
-            @NonNull
-            @Override
-            public BoardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.board,viewGroup,false);
-                return new BoardViewHolder(view);
-            }
-        };
+        adapterBoard = new BoardAdapter(options);
         recyclerViewBoard = findViewById(R.id.boardRecycler);
         recyclerViewBoard.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapterBoard.startListening();
         recyclerViewBoard.setAdapter(adapterBoard);
+
+        adapterBoard.setOnItemClickListener(new BoardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                String url = documentSnapshot.getString("pictureContent");
+                Intent intent = new Intent(getApplicationContext(),BoardContentActivity.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
+            }
+        });
     }
 
     public void directActivity(View view) {
-        startActivity(new Intent(getApplicationContext(),DirectMessageActivity.class));
+        startActivity(new Intent(getApplicationContext(), DirectMessageActivity.class));
     }
 
     @Override
@@ -150,4 +137,5 @@ public class LibraryActivity extends AppCompatActivity {
             adapterBoard.stopListening();
         }
     }
+
 }

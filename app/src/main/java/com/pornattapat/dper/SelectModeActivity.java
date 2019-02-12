@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.pornattapat.dper.Exam.Exam;
+import com.pornattapat.dper.Exam.StartExam;
 
 public class SelectModeActivity extends AppCompatActivity {
 
@@ -88,6 +90,8 @@ public class SelectModeActivity extends AppCompatActivity {
     }
 
     public void back(View view) {
-        finish();
+        Exam.category = "Extra";
+        Intent intent = new Intent(getApplicationContext(),StartExam.class);
+        startActivity(intent);
     }
 }

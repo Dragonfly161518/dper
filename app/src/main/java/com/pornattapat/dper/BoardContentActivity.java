@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,15 +20,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
-public class ClubActivity extends AppCompatActivity {
+public class BoardContentActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseFirestore db;
     private FirebaseUser user;
-
-    TextView displayText;
 
     @Override
     protected void onStart() {
@@ -39,9 +41,30 @@ public class ClubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_club);
+        setContentView(R.layout.activity_board_content);
 
         db = FirebaseFirestore.getInstance();
+
+        Bundle b = getIntent().getExtras();
+        final ProgressBar pgb = findViewById(R.id.progressBoardContent);
+        final ImageView image = findViewById(R.id.pictureBoardContent);
+        image.setVisibility(View.INVISIBLE);
+        pgb.setVisibility(View.VISIBLE);
+        if(b != null) {
+            Picasso.get().load(b.getString("url")).into(image, new Callback() {
+                @Override
+                public void onSuccess() {
+                    image.setVisibility(View.VISIBLE);
+                    pgb.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
+        }
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -53,14 +76,6 @@ public class ClubActivity extends AppCompatActivity {
                 }
             }
         };
-    }
-
-    public void goLearningBoard(View v) {
-        startActivity(new Intent(getApplicationContext(),LibraryActivity.class));
-    }
-
-    public void goActivityBoard(View v) {
-
     }
 
 }
