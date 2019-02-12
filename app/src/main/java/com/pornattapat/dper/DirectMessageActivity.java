@@ -51,9 +51,9 @@ public class DirectMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_direct_message);
 
         chatView = findViewById(R.id.chat_view);
-        chatView.addMessage(new ChatMessage("Message received", System.currentTimeMillis(), ChatMessage.Type.RECEIVED));
-        chatView.addMessage(new ChatMessage("A message with a sender name",
-                System.currentTimeMillis(), ChatMessage.Type.RECEIVED, "Ryan Java"));
+        chatView.addMessage(new ChatMessage("มาคุยกันเถอะ !!", System.currentTimeMillis(), ChatMessage.Type.RECEIVED));
+        chatView.addMessage(new ChatMessage("ไม่ต้องอายหรอกน้าา",
+                System.currentTimeMillis(), ChatMessage.Type.RECEIVED, "Your rabbit's friend"));
         chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override
             public boolean sendMessage(ChatMessage chatMessage) {

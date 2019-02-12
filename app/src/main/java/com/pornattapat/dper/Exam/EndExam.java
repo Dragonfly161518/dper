@@ -62,11 +62,25 @@ public class EndExam extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    String level = "2";
-
+                    final String level = "2";
                     db.collection("users").document(user.getUid())
-                            .update("level",level);
-
+                            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()) {
+                                DocumentSnapshot dc = task.getResult();
+                                if(dc.exists()) {
+                                    String carrot = dc.getString("carrot");
+                                    int carrotData = Integer.parseInt(carrot);
+                                    carrotData = carrotData + b.getInt("score");
+                                    db.collection("users").document(user.getUid())
+                                            .update("level",level);
+                                    db.collection("users").document(user.getUid())
+                                            .update("carrot",String.valueOf(carrotData));
+                                }
+                            }
+                        }
+                    });
 
                 } else {
                     startActivity(new Intent(getApplicationContext(),SignInActivity.class));

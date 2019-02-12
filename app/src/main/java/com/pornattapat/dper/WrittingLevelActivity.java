@@ -86,7 +86,7 @@ public class WrittingLevelActivity extends AppCompatActivity {
             lock1.setVisibility(View.INVISIBLE);
         }
         if(Integer.parseInt(User.level) >= 2) {
-            lock1.setVisibility(View.INVISIBLE);
+            lock2.setVisibility(View.INVISIBLE);
         }
     }
 

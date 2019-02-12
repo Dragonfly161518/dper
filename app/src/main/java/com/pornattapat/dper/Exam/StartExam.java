@@ -80,7 +80,6 @@ public class StartExam extends AppCompatActivity {
 
     public void startExam(View view) {
         if(Exam.category != "Extra") {
-            Toast.makeText(getApplicationContext(),"is not extra",Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(), PlayExamActivity.class));
         } else {
 

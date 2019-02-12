@@ -121,7 +121,6 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                                leftAnswer.setText(document.getString("A"));
                                                rightAnswer.setText(document.getString("B"));
                                                urlMedia = document.getString("media");
-                                               Toast.makeText(getApplicationContext(), Exam.category,   Toast.LENGTH_SHORT).show();
                                                start(false);
                                            } else {
                                                Picasso.get().load(document.getString("picture")).into(quizPicture, new com.squareup.picasso.Callback() {
@@ -196,7 +195,6 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                Toast.makeText(getApplicationContext(),"complete",Toast.LENGTH_SHORT).show();
             }
         });
         mp.start();

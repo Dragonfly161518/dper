@@ -41,14 +41,14 @@
     <com.pornattapat.dper.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="writtingLevel"
-        android:src="@drawable/writing_select_level" />
+        android:onClick="back"
+        android:src="@drawable/lock_sign" />
 
     <com.pornattapat.dper.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="back"
-        android:src="@drawable/reading_select_level" />
+        android:onClick="writtingLevel"
+        android:src="@drawable/test_sign" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="match_parent"

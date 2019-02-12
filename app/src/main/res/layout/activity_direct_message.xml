@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         chatview:backgroundColor="#FFFFFF"
+        chatview:messageTextSize="20sp"
         chatview:bubbleBackgroundRcv="@color/blue"
         chatview:bubbleBackgroundSend="@color/white"
         chatview:bubbleElevation="elevated"

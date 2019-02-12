@@ -90,8 +90,9 @@ public class SelectModeActivity extends AppCompatActivity {
     }
 
     public void back(View view) {
-        Exam.category = "Extra";
-        Intent intent = new Intent(getApplicationContext(),StartExam.class);
-        startActivity(intent);
+//        Exam.category = "Extra";
+//        Intent intent = new Intent(getApplicationContext(),StartExam.class);
+//        startActivity(intent);
+
     }
 }
