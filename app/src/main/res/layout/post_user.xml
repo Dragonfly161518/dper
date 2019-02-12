@@ -30,6 +30,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="ไทยทำไทยใช้"
+                android:textSize="20sp"
                 android:fontFamily="@font/thsarabun"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +38,7 @@
 
             <TextView
                 android:id="@+id/blog_date"
+                android:textSize="16sp"
                 android:fontFamily="@font/thsarabun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,6 +67,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:textSize="20sp"
                 android:text="สอบถามเรื่องการใช้คำทับศัพท์ค่ะ มีใครมีข้อแนะำนบ้างคะ"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

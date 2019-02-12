@@ -203,10 +203,14 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void solve() {
+        int one = 0x00FF00;
+        int two = 0xFF0000;
         if(leftAnswer.getText().equals(answer)) {
-
+            leftAnswer.setBackgroundColor(one);
+            rightAnswer.setBackgroundColor(two);
         } else {
-
+            leftAnswer.setBackgroundColor(two);
+            rightAnswer.setBackgroundColor(one);
         }
     }
 
@@ -229,6 +233,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                 score += 10;
                 correctAnswer++;
             }
+
             if(index + 1 >= totalQuiz) {
                 endGame();
                 return;

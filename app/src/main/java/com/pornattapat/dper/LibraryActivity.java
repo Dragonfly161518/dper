@@ -19,6 +19,8 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+
 public class LibraryActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -67,7 +69,8 @@ public class LibraryActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post model) {
                 holder.blog_user.setText(model.getUser());
-                holder.blog_date.setText(model.getDate().toString());
+                SimpleDateFormat format = new SimpleDateFormat("d MMM yyyy HH:mm");
+                holder.blog_date.setText(format.format(model.getDate()) +"");
                 holder.blog_desc.setText(model.getText());
             }
 
