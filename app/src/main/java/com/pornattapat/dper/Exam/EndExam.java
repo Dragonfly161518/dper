@@ -62,6 +62,12 @@ public class EndExam extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    String level = "2";
+
+                    db.collection("users").document(user.getUid())
+                            .update("level",level);
+
+
                 } else {
                     startActivity(new Intent(getApplicationContext(),SignInActivity.class));
                 }

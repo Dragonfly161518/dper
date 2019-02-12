@@ -66,6 +66,48 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/level_3" />
 
+            <ImageView
+                android:id="@+id/lock_1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/lock"
+                android:layout_marginStart="132dp"
+                android:layout_marginTop="140dp"
+                android:onClick="exam"
+                app:layout_constraintStart_toStartOf="@id/bg_scroll"
+                app:layout_constraintTop_toTopOf="@id/bg_scroll" />
+
+            <ImageView
+                android:id="@+id/lock_2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="124dp"
+                android:layout_marginTop="92dp"
+                android:background="@drawable/lock"
+                android:onClick="examVoice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lock_1" />
+
+            <ImageView
+                android:id="@+id/lock_3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="132dp"
+                android:layout_marginTop="84dp"
+                android:background="@drawable/lock"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lock_2" />
+
+            <ImageView
+                android:id="@+id/lock_4"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="212dp"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/lock"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lock_3" />
+
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

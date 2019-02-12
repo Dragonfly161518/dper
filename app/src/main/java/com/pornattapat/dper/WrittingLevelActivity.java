@@ -28,7 +28,7 @@ public class WrittingLevelActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseUser user;
 
-    TextView carrotAmount;
+    ImageView level1,level2,lock1,lock2;
 
     @Override
     protected void onStart() {
@@ -44,19 +44,50 @@ public class WrittingLevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_writting_level);
 
         db = FirebaseFirestore.getInstance();
-
-        holdAnimtion();
+        level1 = findViewById(R.id.level_1);
+        level2 = findViewById(R.id.level_2);
+        lock1 = findViewById(R.id.lock_1);
+        lock2 = findViewById(R.id.lock_2);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    db.collection("users").document(user.getUid()).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            User.level = document.getString("level");
+                                            User.user = document.getString("user");
+                                            User.email = document.getString("email");
+                                            User.name = document.getString("name");
+                                            User.sur_name = document.getString("sur_name");
+                                        }
+
+                                    }
+                                }
+                            });
+                    holdAnimtion();
                 } else {
                     startActivity(new Intent(getApplicationContext(),SignInActivity.class));
                 }
             }
         };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Integer.parseInt(User.level) >= 1) {
+            lock1.setVisibility(View.INVISIBLE);
+        }
+        if(Integer.parseInt(User.level) >= 2) {
+            lock1.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void holdAnimtion() {
@@ -77,12 +108,16 @@ public class WrittingLevelActivity extends AppCompatActivity {
 
     public void exam(View view) {
         Exam.category = "Exam";
-        startActivity(new Intent(getApplicationContext(),StartExam.class));
+        if(lock1.getVisibility() != View.VISIBLE) {
+            startActivity(new Intent(getApplicationContext(), StartExam.class));
+        }
     }
 
     public void examVoice(View view) {
         Exam.category = "VoiceExam";
-        startActivity(new Intent(getApplicationContext(),StartExam.class));
+        if(lock2.getVisibility() != View.VISIBLE) {
+            startActivity(new Intent(getApplicationContext(), StartExam.class));
+        }
     }
 
     public void back(View view) {

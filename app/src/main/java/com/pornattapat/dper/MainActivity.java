@@ -46,7 +46,22 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
+                    db.collection("users").document(user.getUid()).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            User.level = document.getString("level");
+                                            User.user = document.getString("user");
+                                            User.email = document.getString("email");
+                                            User.name = document.getString("name");
+                                            User.sur_name = document.getString("sur_name");
+                                        }
+                                    }
+                                }
+                            });
                     setCarrotAmount();
                 } else {
                     startActivity(new Intent(getApplicationContext(),SignInActivity.class));

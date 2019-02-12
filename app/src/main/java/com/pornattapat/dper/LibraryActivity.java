@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -52,7 +54,22 @@ public class LibraryActivity extends AppCompatActivity  {
                 if (user != null) {
                     recyclerPost();
                     recyclerBoard();
-
+                    db.collection("users").document(user.getUid()).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            User.level = document.getString("level");
+                                            User.user = document.getString("user");
+                                            User.email = document.getString("email");
+                                            User.name = document.getString("name");
+                                            User.sur_name = document.getString("sur_name");
+                                        }
+                                    }
+                                }
+                            });
 
                 } else {
                     startActivity(new Intent(getApplicationContext(), SignInActivity.class));
@@ -64,7 +81,8 @@ public class LibraryActivity extends AppCompatActivity  {
 
     public void recyclerPost() {
         Query query = FirebaseFirestore.getInstance()
-                .collection("posts");
+                .collection("posts")
+                .orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
                 .setQuery(query, Post.class).build();
         adapterPost = new FirestoreRecyclerAdapter<Post, PostViewHolder>(options) {
@@ -113,6 +131,10 @@ public class LibraryActivity extends AppCompatActivity  {
 
     public void directActivity(View view) {
         startActivity(new Intent(getApplicationContext(), DirectMessageActivity.class));
+    }
+
+    public void addPost(View view) {
+        startActivity(new Intent(getApplicationContext(), AddPostActivity.class));
     }
 
     @Override
