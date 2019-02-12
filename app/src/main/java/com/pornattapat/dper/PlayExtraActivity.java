@@ -1,4 +1,4 @@
-package com.pornattapat.dper.Exam;
+package com.pornattapat.dper;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.pornattapat.dper.Exam.EndExam;
+import com.pornattapat.dper.Exam.Exam;
 import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
 import com.squareup.picasso.Picasso;
@@ -66,8 +68,12 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
         three = findViewById(R.id.three);
         four = findViewById(R.id.four);
         counter = findViewById(R.id.counter);
-        question = findViewById(R.id.question);
+        question = findViewById(R.id.questionExtra);
         Sprite effect = new FoldingCube();
+        one.setOnClickListener(this);
+        two.setOnClickListener(this);
+        three.setOnClickListener(this);
+        four.setOnClickListener(this);
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -100,6 +106,7 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
                                             three.setText(document.getString("C"));
                                             four.setText(document.getString("D"));
                                             answer = document.getString("correctAnswer");
+                                            question.setText(document.getString("question"));
                                             Exam.TIMEOUT = document.getLong("time").intValue() * 1000;
                                             start(true);
                                         }

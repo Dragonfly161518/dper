@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.pornattapat.dper.PlayExtraActivity;
 import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
 
@@ -78,7 +79,13 @@ public class StartExam extends AppCompatActivity {
     }
 
     public void startExam(View view) {
-        startActivity(new Intent(getApplicationContext(),PlayExamActivity.class));
+        if(Exam.category != "Extra") {
+            Toast.makeText(getApplicationContext(),"is not extra",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), PlayExamActivity.class));
+        } else {
+
+            startActivity(new Intent(getApplicationContext(), PlayExtraActivity.class));
+        }
         finish();
     }
 
