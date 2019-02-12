@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class LibraryActivity extends AppCompatActivity {
 
@@ -24,9 +26,12 @@ public class LibraryActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseUser user;
 
-    RecyclerView recyclerView;
-    FirestoreRecyclerOptions<Post> options;
-    FirestoreRecyclerAdapter<Post, PostViewHolder> adapter;
+    RecyclerView recyclerViewPost;
+    RecyclerView recyclerViewBoard;
+    FirestoreRecyclerAdapter<Post, PostViewHolder> adapterPost;
+    FirestoreRecyclerAdapter<Board, BoardViewHolder> adapterBoard;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,18 +47,23 @@ public class LibraryActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    recyclerPost();
+                    recyclerBoard();
+
+
                 } else {
-                    startActivity(new Intent(getApplicationContext(),SignInActivity.class));
+                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                 }
             }
         };
+    }
 
-        recyclerView = findViewById(R.id.postUser);
+    public void recyclerPost() {
         Query query = FirebaseFirestore.getInstance()
                 .collection("posts");
-        options = new FirestoreRecyclerOptions.Builder<Post>()
+        FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
                 .setQuery(query, Post.class).build();
-        adapter = new FirestoreRecyclerAdapter<Post, PostViewHolder>(options) {
+        adapterPost = new FirestoreRecyclerAdapter<Post, PostViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post model) {
                 holder.blog_user.setText(model.getUser());
@@ -67,11 +77,48 @@ public class LibraryActivity extends AppCompatActivity {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.post_user,viewGroup,false);
                 return new PostViewHolder(view);
             }
-
         };
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
+        recyclerViewPost = findViewById(R.id.postUser);
+        recyclerViewPost.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapterPost.startListening();
+        recyclerViewPost.setAdapter(adapterPost);
+    }
+
+    public void recyclerBoard() {
+        Query query = FirebaseFirestore.getInstance()
+                .collection("boards");
+        FirestoreRecyclerOptions<Board> options = new FirestoreRecyclerOptions.Builder<Board>()
+                .setQuery(query, Board.class).build();
+        adapterBoard = new FirestoreRecyclerAdapter<Board, BoardViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull final BoardViewHolder holder, int position, @NonNull final Board model) {
+                Picasso.get().load(model.getPictureHead()).into(holder.pictureBoard, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.textBoard.setText(model.getHead());
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        holder.textBoard.setVisibility(View.VISIBLE);
+                        holder.pictureBoard.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public BoardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.board,viewGroup,false);
+                return new BoardViewHolder(view);
+            }
+        };
+        recyclerViewBoard = findViewById(R.id.boardRecycler);
+        recyclerViewBoard.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapterBoard.startListening();
+        recyclerViewBoard.setAdapter(adapterBoard);
     }
 
     public void directActivity(View view) {
@@ -81,8 +128,11 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(adapter != null) {
-            adapter.startListening();
+        if(adapterPost != null) {
+            adapterPost.startListening();
+        }
+        if(adapterBoard != null) {
+            adapterBoard.startListening();
         }
         mAuth.addAuthStateListener(mAuthListener);
     }
@@ -90,8 +140,11 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(adapter != null) {
-            adapter.stopListening();
+        if(adapterPost != null) {
+            adapterPost.stopListening();
+        }
+        if(adapterBoard != null) {
+            adapterBoard.stopListening();
         }
     }
 }

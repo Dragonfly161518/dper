@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="10dp"
+    android:layout_margin="8dp"
+    app:cardMaxElevation="15dp"
+    app:contentPaddingLeft="10dp"
+    app:contentPaddingRight="10dp"
+    android:elevation="5dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:background="@drawable/lib_text1"
+                android:id="@+id/pictureBoard"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/textBoard"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pictureBoard"
+                android:gravity="center_vertical"
+                android:text="กลอนช่วยจำ 'กระ'" />
+
+            <ProgressBar
+                android:id="@+id/progressBoard"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+</android.support.v7.widget.CardView>
