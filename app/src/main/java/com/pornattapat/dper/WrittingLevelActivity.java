@@ -80,6 +80,11 @@ public class WrittingLevelActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),StartExam.class));
     }
 
+    public void examVoice(View view) {
+        Exam.category = "VoiceExam";
+        startActivity(new Intent(getApplicationContext(),StartExam.class));
+    }
+
     public void back(View view) {
         finish();
     }

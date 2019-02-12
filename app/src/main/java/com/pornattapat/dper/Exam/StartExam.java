@@ -79,6 +79,7 @@ public class StartExam extends AppCompatActivity {
 
     public void startExam(View view) {
         startActivity(new Intent(getApplicationContext(),PlayExamActivity.class));
+        finish();
     }
 
     public void exitExam(View view) {

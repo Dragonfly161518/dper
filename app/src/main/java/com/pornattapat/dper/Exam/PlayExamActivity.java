@@ -1,6 +1,7 @@
 package com.pornattapat.dper.Exam;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -27,6 +28,8 @@ import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+
 public class PlayExamActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private FirebaseAuth mAuth;
@@ -39,10 +42,10 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     ProgressBar progressBar;
     TextView leftAnswer;
     TextView rightAnswer;
-    ImageView quizPicture;
+    ImageView quizPicture,speaker;
     Button counter;
 
-    String answer;
+    String answer,urlMedia;
 
     int index=0,score=0,totalQuiz,correctAnswer;
 
@@ -63,6 +66,8 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
         leftAnswer = findViewById(R.id.leftAnswer);
         rightAnswer = findViewById(R.id.rightAnswer);
+        speaker = findViewById(R.id.speaker);
+        speaker.setVisibility(View.INVISIBLE);
         counter = findViewById(R.id.counter);
         quizPicture = findViewById(R.id.quizPicture);
         progressBar = findViewById(R.id.progress);
@@ -106,7 +111,18 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                         if (document.exists()) {
 
                                            if(document.getBoolean("isVoiceExam")) {
-
+                                               progressBar.setVisibility(View.INVISIBLE);
+                                               speaker.setVisibility(View.VISIBLE);
+                                               quizPicture.setVisibility(View.INVISIBLE);
+                                               counter.setVisibility(View.INVISIBLE);
+                                               leftAnswer.setVisibility(View.VISIBLE);
+                                               rightAnswer.setVisibility(View.VISIBLE);
+                                               answer = document.getString("correctAnswer");
+                                               leftAnswer.setText(document.getString("A"));
+                                               rightAnswer.setText(document.getString("B"));
+                                               urlMedia = document.getString("media");
+                                               Toast.makeText(getApplicationContext(), Exam.category,   Toast.LENGTH_SHORT).show();
+                                               start(false);
                                            } else {
                                                Picasso.get().load(document.getString("picture")).into(quizPicture, new com.squareup.picasso.Callback() {
 
@@ -120,8 +136,8 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                                        leftAnswer.setText(document.getString("A"));
                                                        rightAnswer.setText(document.getString("B"));
                                                        answer = document.getString("correctAnswer");
-                                                       Exam.TIMEOUT = document.getLong("time").intValue() * 1000;
-                                                       start();
+                                                       Exam.TIMEOUT = document.getLong("time").intValue()*1000;
+                                                       start(true);
                                                    }
 
                                                    @Override
@@ -151,28 +167,40 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         setQuiz(index);
     }
 
-    public void start() {
-        mCountDown = new CountDownTimer(Exam.TIMEOUT,1000) {
-            @Override
-            public void onTick(long l) {
-                counter.setText(String.valueOf(l/1000));
-            }
-
-            @Override
-            public void onFinish() {
-                mCountDown.cancel();
-                if(index + 1 >= totalQuiz) {
-                    endGame();
-                    return;
+    public void start(boolean countdown) {
+        if(countdown) {
+            mCountDown = new CountDownTimer(Exam.TIMEOUT, 1000) {
+                @Override
+                public void onTick(long l) {
+                    counter.setText(String.valueOf(l / 1000));
                 }
-                setQuiz(++index);
-            }
-        };
-        mCountDown.start();
+
+                @Override
+                public void onFinish() {
+                    mCountDown.cancel();
+                    if (index + 1 >= totalQuiz) {
+                        endGame();
+                        return;
+                    }
+                    setQuiz(++index);
+                }
+            };
+            mCountDown.start();
+        }
     }
 
-    public void startExam() {
-        startActivity(new Intent(getApplicationContext(),PlayExamActivity.class));
+    public void playMedia(View v) throws IOException {
+        MediaPlayer mp = new MediaPlayer();
+        mp.setDataSource(urlMedia);
+        mp.prepare();
+        Toast.makeText(getApplicationContext(), answer + " " + urlMedia, Toast.LENGTH_SHORT).show();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                Toast.makeText(getApplicationContext(),"fuck",Toast.LENGTH_SHORT).show();
+            }
+        });
+        mp.start();
     }
 
     public void solve() {
@@ -185,7 +213,8 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        mCountDown.cancel();
+        if(mCountDown != null)
+            mCountDown.cancel();
         if(index < totalQuiz) {
             String checkAnswer = "";
             switch(view.getId()) {
