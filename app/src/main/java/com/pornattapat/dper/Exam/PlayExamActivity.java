@@ -193,11 +193,10 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         MediaPlayer mp = new MediaPlayer();
         mp.setDataSource(urlMedia);
         mp.prepare();
-        Toast.makeText(getApplicationContext(), answer + " " + urlMedia, Toast.LENGTH_SHORT).show();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                Toast.makeText(getApplicationContext(),"fuck",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"complete",Toast.LENGTH_SHORT).show();
             }
         });
         mp.start();
@@ -213,8 +212,9 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(mCountDown != null)
+        if(mCountDown != null) {
             mCountDown.cancel();
+        }
         if(index < totalQuiz) {
             String checkAnswer = "";
             switch(view.getId()) {
