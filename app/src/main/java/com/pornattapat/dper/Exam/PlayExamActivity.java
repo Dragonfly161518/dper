@@ -230,10 +230,10 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void solve() {
+        String one = "#00FF00";
+        final String old = "#ffe450";
+        String two = "#FF0000";
         if(Exam.category == "Exam" || Exam.category == "VoiceExam") {
-            String one = "#00FF00";
-            final String old = "#ffe450";
-            String two = "#FF0000";
             if (leftAnswer.getText().equals(answer)) {
                 choice1.setCardBackgroundColor(Color.parseColor(one));
                 choice2.setCardBackgroundColor(Color.parseColor(two));

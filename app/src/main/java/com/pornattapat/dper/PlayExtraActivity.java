@@ -1,12 +1,14 @@
 package com.pornattapat.dper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,6 +44,7 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
     CountDownTimer mCountDown;
 
     TextView one,two,three,four,question;
+    CardView onec,twoc,threec,fourc;
     Button counter;
 
     String answer;
@@ -68,6 +71,10 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
         three = findViewById(R.id.three);
         four = findViewById(R.id.four);
         counter = findViewById(R.id.counter);
+        onec = findViewById(R.id.onec);
+        twoc = findViewById(R.id.twoc);
+        threec = findViewById(R.id.threec);
+        fourc = findViewById(R.id.fourc);
         question = findViewById(R.id.questionExtra);
         Sprite effect = new FoldingCube();
         one.setOnClickListener(this);
@@ -162,21 +169,65 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
         }
         if(index < totalQuiz) {
             String checkAnswer = "";
+            int idright = 0;
+
+            String right = "#00FF00";
+            final String old = "#ffe450";
+            String not = "#FF0000";
+
             switch(view.getId()) {
                 case R.id.one:
                     checkAnswer = one.getText().toString();
+                    fourc.setCardBackgroundColor(Color.parseColor(not));
+                    onec.setCardBackgroundColor(Color.parseColor(right));
+                    twoc.setCardBackgroundColor(Color.parseColor(not));
+                    threec.setCardBackgroundColor(Color.parseColor(not));
                     break;
                 case R.id.two:
                     checkAnswer = two.getText().toString();
+                    fourc.setCardBackgroundColor(Color.parseColor(not));
+                    onec.setCardBackgroundColor(Color.parseColor(not));
+                    twoc.setCardBackgroundColor(Color.parseColor(right));
+                    threec.setCardBackgroundColor(Color.parseColor(not));
                     break;
                 case R.id.three:
                     checkAnswer = three.getText().toString();
+                    fourc.setCardBackgroundColor(Color.parseColor(not));
+                    onec.setCardBackgroundColor(Color.parseColor(not));
+                    twoc.setCardBackgroundColor(Color.parseColor(not));
+                    threec.setCardBackgroundColor(Color.parseColor(right));
                     break;
                 case R.id.four:
                     checkAnswer = four.getText().toString();
+                    fourc.setCardBackgroundColor(Color.parseColor(right));
+                    onec.setCardBackgroundColor(Color.parseColor(not));
+                    twoc.setCardBackgroundColor(Color.parseColor(not));
+                    threec.setCardBackgroundColor(Color.parseColor(not));
                     break;
-
             }
+
+            if(one.getText().toString().equals(answer)) {
+                fourc.setCardBackgroundColor(Color.parseColor(not));
+                onec.setCardBackgroundColor(Color.parseColor(right));
+                twoc.setCardBackgroundColor(Color.parseColor(not));
+                threec.setCardBackgroundColor(Color.parseColor(not));
+            } else if(two.getText().toString().equals(answer)) {
+                fourc.setCardBackgroundColor(Color.parseColor(not));
+                onec.setCardBackgroundColor(Color.parseColor(not));
+                twoc.setCardBackgroundColor(Color.parseColor(right));
+                threec.setCardBackgroundColor(Color.parseColor(not));
+            } else if(three.getText().toString().equals(answer)) {
+                fourc.setCardBackgroundColor(Color.parseColor(not));
+                onec.setCardBackgroundColor(Color.parseColor(not));
+                twoc.setCardBackgroundColor(Color.parseColor(not));
+                threec.setCardBackgroundColor(Color.parseColor(right));
+            } else {
+                    fourc.setCardBackgroundColor(Color.parseColor(right));
+                    onec.setCardBackgroundColor(Color.parseColor(not));
+                    twoc.setCardBackgroundColor(Color.parseColor(not));
+                    threec.setCardBackgroundColor(Color.parseColor(not));
+            }
+
             if(checkAnswer.equals(answer)) {
                 score += 10;
                 correctAnswer++;
@@ -186,7 +237,24 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
                 endGame();
                 return;
             }
-            setQuiz(++index);
+
+            new CountDownTimer(3000,1000) {
+
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    fourc.setCardBackgroundColor(Color.parseColor(old));
+                    onec.setCardBackgroundColor(Color.parseColor(old));
+                    twoc.setCardBackgroundColor(Color.parseColor(old));
+                    threec.setCardBackgroundColor(Color.parseColor(old));
+                    setQuiz(++index);
+                }
+            }.start();
+
         } else {
             endGame();
         }
