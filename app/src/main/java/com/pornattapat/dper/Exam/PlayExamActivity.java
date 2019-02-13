@@ -1,6 +1,7 @@
 package com.pornattapat.dper.Exam;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
 import com.pornattapat.dper.CustomImageView;
 import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
@@ -51,6 +53,8 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     CardView choice1,choice2,questionMic;
     CustomImageView mic;
     Button stop;
+    private StorageReference mStorage;
+
     String answer,urlMedia;
 
     int index=0,score=0,totalQuiz,correctAnswer;
@@ -107,6 +111,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         rightAnswer.setVisibility(View.INVISIBLE);
         counter.setVisibility(View.INVISIBLE);
         quizPicture.setVisibility(View.INVISIBLE);
+        speaker.setVisibility(View.INVISIBLE);
 
         leftAnswer.setOnClickListener(this);
         rightAnswer.setOnClickListener(this);
@@ -205,7 +210,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                         endGame();
                         return;
                     }
-                    setQuiz(++index);
+                    solve();
                 }
             };
             mCountDown.start();
@@ -225,14 +230,32 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void solve() {
-        int one = 0x00FF00;
-        int two = 0xFF0000;
-        if(leftAnswer.getText().equals(answer)) {
-            leftAnswer.setBackgroundColor(one);
-            rightAnswer.setBackgroundColor(two);
+        if(Exam.category == "Exam" || Exam.category == "VoiceExam") {
+            String one = "#00FF00";
+            final String old = "#ffe450";
+            String two = "#FF0000";
+            if (leftAnswer.getText().equals(answer)) {
+                choice1.setCardBackgroundColor(Color.parseColor(one));
+                choice2.setCardBackgroundColor(Color.parseColor(two));
+            } else {
+                choice1.setCardBackgroundColor(Color.parseColor(two));
+                choice2.setCardBackgroundColor(Color.parseColor(one));
+            }
+            new CountDownTimer(3000, 1000) {
+
+                @Override
+                public void onTick(long l) {
+                }
+
+                @Override
+                public void onFinish() {
+                    choice1.setCardBackgroundColor(Color.parseColor(old));
+                    choice2.setCardBackgroundColor(Color.parseColor(old));
+                    setQuiz(++index);
+                }
+            }.start();
         } else {
-            leftAnswer.setBackgroundColor(two);
-            rightAnswer.setBackgroundColor(one);
+            setQuiz(++index);
         }
     }
 
@@ -260,7 +283,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                 endGame();
                 return;
             }
-            setQuiz(++index);
+            solve();
         } else {
             endGame();
         }
@@ -293,6 +316,7 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         myAudioRecorder.release();
         myAudioRecorder = null;
         stop.setEnabled(false);
+
         Toast.makeText(getApplicationContext(), "เรียบร้อยแล้วครับ", Toast.LENGTH_LONG).show();
     }
 

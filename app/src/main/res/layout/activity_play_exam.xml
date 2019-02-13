@@ -150,7 +150,7 @@
             android:layout_height="100dp"
             android:layout_margin="16dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#ff9A50"
+            app:cardBackgroundColor="#ffe450"
             app:cardCornerRadius="5dp"
             app:cardElevation="10dp"
             app:cardMaxElevation="15dp"

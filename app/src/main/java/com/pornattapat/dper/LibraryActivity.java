@@ -33,7 +33,7 @@ public class LibraryActivity extends AppCompatActivity  {
 
     RecyclerView recyclerViewPost;
     RecyclerView recyclerViewBoard;
-    FirestoreRecyclerAdapter<Post, PostViewHolder> adapterPost;
+    PostAdapter adapterPost;
     BoardAdapter adapterBoard;
 
 
@@ -85,22 +85,7 @@ public class LibraryActivity extends AppCompatActivity  {
                 .orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
                 .setQuery(query, Post.class).build();
-        adapterPost = new FirestoreRecyclerAdapter<Post, PostViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post model) {
-                holder.blog_user.setText(model.getUser());
-                SimpleDateFormat format = new SimpleDateFormat("d MMM yyyy HH:mm");
-                holder.blog_date.setText(format.format(model.getDate()) +"");
-                holder.blog_desc.setText(model.getText());
-            }
-
-            @NonNull
-            @Override
-            public PostViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.post_user,viewGroup,false);
-                return new PostViewHolder(view);
-            }
-        };
+        adapterPost = new PostAdapter(options);
         recyclerViewPost = findViewById(R.id.postUser);
         recyclerViewPost.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapterPost.startListening();

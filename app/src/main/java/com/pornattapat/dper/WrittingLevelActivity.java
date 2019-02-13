@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 import com.pornattapat.dper.Exam.Exam;
 import com.pornattapat.dper.Exam.StartExam;
 
@@ -28,7 +29,6 @@ public class WrittingLevelActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseUser user;
 
-    private StorageReference
 
     ImageView level1,level2,lock1,lock2;
 
