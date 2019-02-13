@@ -96,6 +96,7 @@ public class WrittingLevelActivity extends AppCompatActivity {
         AnimationDrawable frameAnimation = (AnimationDrawable) rabbit.getBackground();
         frameAnimation.start();
 
+
         ImageView turtle = findViewById(R.id.turtle_animation);
         turtle.setBackgroundResource(R.drawable.turtle_animation);
         AnimationDrawable tleAnimation = (AnimationDrawable) turtle.getBackground();

@@ -34,6 +34,7 @@
         <activity android:name=".BoardContentActivity"></activity>
         <activity android:name=".PlayExtraActivity"></activity>
         <activity android:name=".AddPostActivity"></activity>
+        <activity android:name=".ActivityBoardActivity"></activity>
         <activity
             android:screenOrientation="landscape"
             android:name=".ClubActivity"></activity>

@@ -103,6 +103,8 @@ public class SignUpActivity extends AppCompatActivity {
                             userMap.put("email",email);
                             userMap.put("name",name);
                             userMap.put("sur_name",surname);
+                            userMap.put("carrot","0");
+                            userMap.put("level","1");
 
                             db.collection("users")
                                     .document(UID)
