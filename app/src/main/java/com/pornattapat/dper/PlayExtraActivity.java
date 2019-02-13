@@ -216,7 +216,7 @@ public class PlayExtraActivity extends AppCompatActivity implements View.OnClick
                 onec.setCardBackgroundColor(Color.parseColor(not));
                 twoc.setCardBackgroundColor(Color.parseColor(right));
                 threec.setCardBackgroundColor(Color.parseColor(not));
-            } else if(three.getText().toString().equals(answer)) {
+            } else if(three.getText( ).toString().equals(answer)) {
                 fourc.setCardBackgroundColor(Color.parseColor(not));
                 onec.setCardBackgroundColor(Color.parseColor(not));
                 twoc.setCardBackgroundColor(Color.parseColor(not));
