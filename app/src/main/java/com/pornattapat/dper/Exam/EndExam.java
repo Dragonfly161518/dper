@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
+import com.pornattapat.dper.WrittingLevelActivity;
 
 public class EndExam extends AppCompatActivity {
 
@@ -90,11 +91,13 @@ public class EndExam extends AppCompatActivity {
     }
 
     public void back(View view) {
+
+        startActivity(new Intent(getApplicationContext(),WrittingLevelActivity.class));
         finish();
     }
 
     public void nextExam(View view) {
         finish();
-
+        startActivity(new Intent(getApplicationContext(),WrittingLevelActivity.class));
     }
 }

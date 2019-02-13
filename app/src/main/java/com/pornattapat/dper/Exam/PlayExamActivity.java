@@ -2,11 +2,14 @@ package com.pornattapat.dper.Exam;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.pornattapat.dper.CustomImageView;
 import com.pornattapat.dper.R;
 import com.pornattapat.dper.SignInActivity;
 import com.squareup.picasso.Picasso;
@@ -41,10 +45,12 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
     ProgressBar progressBar;
     TextView leftAnswer;
-    TextView rightAnswer;
+    TextView rightAnswer,questionTag;
     ImageView quizPicture,speaker;
     Button counter;
-
+    CardView choice1,choice2,questionMic;
+    CustomImageView mic;
+    Button stop;
     String answer,urlMedia;
 
     int index=0,score=0,totalQuiz,correctAnswer;
@@ -64,6 +70,15 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
 
         db = FirebaseFirestore.getInstance();
 
+        choice1 = findViewById(R.id.choice1);
+        choice2 = findViewById(R.id.choice2);
+        mic = findViewById(R.id.mic);
+        stop = findViewById(R.id.stop);
+        stop.setVisibility(View.INVISIBLE);
+        questionTag = findViewById(R.id.questionTag);
+        mic.setVisibility(View.INVISIBLE);
+        questionMic = findViewById(R.id.questionMic);
+        questionMic.setVisibility(View.INVISIBLE);
         leftAnswer = findViewById(R.id.leftAnswer);
         rightAnswer = findViewById(R.id.rightAnswer);
         speaker = findViewById(R.id.speaker);
@@ -109,42 +124,51 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
                                     if (task.isSuccessful()) {
                                         final DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
+                                            if(document.getBoolean("isMic") == null) {
+                                                if (document.getBoolean("isVoiceExam")) {
+                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                    speaker.setVisibility(View.VISIBLE);
+                                                    quizPicture.setVisibility(View.INVISIBLE);
+                                                    counter.setVisibility(View.INVISIBLE);
+                                                    leftAnswer.setVisibility(View.VISIBLE);
+                                                    rightAnswer.setVisibility(View.VISIBLE);
+                                                    answer = document.getString("correctAnswer");
+                                                    leftAnswer.setText(document.getString("A"));
+                                                    rightAnswer.setText(document.getString("B"));
+                                                    urlMedia = document.getString("media");
+                                                    start(false);
+                                                } else {
+                                                    Picasso.get().load(document.getString("picture")).into(quizPicture, new com.squareup.picasso.Callback() {
 
-                                           if(document.getBoolean("isVoiceExam")) {
-                                               progressBar.setVisibility(View.INVISIBLE);
-                                               speaker.setVisibility(View.VISIBLE);
-                                               quizPicture.setVisibility(View.INVISIBLE);
-                                               counter.setVisibility(View.INVISIBLE);
-                                               leftAnswer.setVisibility(View.VISIBLE);
-                                               rightAnswer.setVisibility(View.VISIBLE);
-                                               answer = document.getString("correctAnswer");
-                                               leftAnswer.setText(document.getString("A"));
-                                               rightAnswer.setText(document.getString("B"));
-                                               urlMedia = document.getString("media");
-                                               start(false);
+                                                        @Override
+                                                        public void onSuccess() {
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            leftAnswer.setVisibility(View.VISIBLE);
+                                                            rightAnswer.setVisibility(View.VISIBLE);
+                                                            counter.setVisibility(View.VISIBLE);
+                                                            quizPicture.setVisibility(View.VISIBLE);
+                                                            leftAnswer.setText(document.getString("A"));
+                                                            rightAnswer.setText(document.getString("B"));
+                                                            answer = document.getString("correctAnswer");
+                                                            Exam.TIMEOUT = document.getLong("time").intValue() * 1000;
+                                                            start(true);
+                                                        }
+
+                                                        @Override
+                                                        public void onError(Exception e) {
+
+                                                        }
+                                                    });
+                                                }
                                            } else {
-                                               Picasso.get().load(document.getString("picture")).into(quizPicture, new com.squareup.picasso.Callback() {
+                                                mic.setVisibility(View.VISIBLE);
+                                                choice1.setVisibility(View.INVISIBLE);
+                                                choice2.setVisibility(View.INVISIBLE);
 
-                                                   @Override
-                                                   public void onSuccess() {
-                                                       progressBar.setVisibility(View.INVISIBLE);
-                                                       leftAnswer.setVisibility(View.VISIBLE);
-                                                       rightAnswer.setVisibility(View.VISIBLE);
-                                                       counter.setVisibility(View.VISIBLE);
-                                                       quizPicture.setVisibility(View.VISIBLE);
-                                                       leftAnswer.setText(document.getString("A"));
-                                                       rightAnswer.setText(document.getString("B"));
-                                                       answer = document.getString("correctAnswer");
-                                                       Exam.TIMEOUT = document.getLong("time").intValue()*1000;
-                                                       start(true);
-                                                   }
-
-                                                   @Override
-                                                   public void onError(Exception e) {
-
-                                                   }
-                                               });
-                                           }
+                                                questionMic.setVisibility(View.VISIBLE);
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                                questionTag.setText(document.getString("questionTag"));
+                                            }
                                         } else {
                                             Toast.makeText(getApplicationContext(), "พบปัญหาในการเข้าถึงข้อมูล กรุณาติดต่อทีมพัฒนา " + indexQuiz + " " + Exam.category + " " + Exam.totalQuiz, Toast.LENGTH_SHORT).show();
                                         }
@@ -240,6 +264,36 @@ public class PlayExamActivity extends AppCompatActivity implements View.OnClickL
         } else {
             endGame();
         }
+    }
+
+    private MediaRecorder myAudioRecorder;
+    private String outputFile;
+
+    public void microphone(View v) {
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
+        myAudioRecorder = new MediaRecorder();
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setOutputFile(outputFile);
+        try {
+            myAudioRecorder.prepare();
+            myAudioRecorder.start();
+        } catch (IllegalStateException ise) {
+            // make something ...
+        } catch (IOException ioe) {
+            // make something
+        }
+        stop.setVisibility(View.VISIBLE);
+        mic.setVisibility(View.INVISIBLE);
+    }
+
+    public void stopmic(View v) {
+        myAudioRecorder.stop();
+        myAudioRecorder.release();
+        myAudioRecorder = null;
+        stop.setEnabled(false);
+        Toast.makeText(getApplicationContext(), "เรียบร้อยแล้วครับ", Toast.LENGTH_LONG).show();
     }
 
     public void endGame() {

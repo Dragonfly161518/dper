@@ -28,6 +28,8 @@ public class WrittingLevelActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseUser user;
 
+    private StorageReference
+
     ImageView level1,level2,lock1,lock2;
 
     @Override
@@ -103,14 +105,12 @@ public class WrittingLevelActivity extends AppCompatActivity {
         tleAnimation.start();
     }
 
-    public void displayTest1(View view) {
-        Toast.makeText(getApplicationContext(),"test1",Toast.LENGTH_SHORT).show();
-    }
 
     public void exam(View view) {
         Exam.category = "Exam";
         if(lock1.getVisibility() != View.VISIBLE) {
             startActivity(new Intent(getApplicationContext(), StartExam.class));
+            finish();
         }
     }
 
